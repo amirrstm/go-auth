@@ -5,7 +5,7 @@ For any fiber go application, just clone the repo & rename the application name.
 
 <p align="center">
   <a href="https://golang.org/doc/go1.16">
-    <img src="https://img.shields.io/badge/Go-1.16+-00ADD8?style=flat&logo=go">
+    <img src="https://img.shields.io/badge/Go-1.22+-00ADD8?style=flat&logo=go">
   </a>
   <a href="https://github.com/gofiber/fiber/releases">
     <img src="https://img.shields.io/github/v/release/gofiber/fiber?color=00ADD8&label=%F0%9F%9A%80%20">
@@ -16,9 +16,7 @@ For any fiber go application, just clone the repo & rename the application name.
   <a href="https://gocover.io/github.com/hrshadhin/fiber-go-boilerplate">
     <img src="https://img.shields.io/badge/%F0%9F%94%8E%20gocover-56.0%25-75C46B.svg?style=flat">
   </a>
-  <a href="https://github.com/hrshadhin/fiber-go-boilerplate/actions?query=workflow%3ASecurity">
-    <img src="https://img.shields.io/github/workflow/status/hrshadhin/fiber-go-boilerplate/Security?label=%F0%9F%94%91%20gosec&style=flat&color=75C46B">
-  </a>
+ 
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/License-MIT-green.svg">
   </a>
