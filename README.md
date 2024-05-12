@@ -1,4 +1,4 @@
-# go-auth
+# Go Auth
 
 An Application For Handling Authentication Using Go Lang
 For any fiber go application, just clone the repo & rename the application name.
