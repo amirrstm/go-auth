@@ -32,7 +32,7 @@ migrate.up:
 	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" up
 
 migrate.down:
-	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" down
+	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" down 
 
 migrate.force:
 	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" force $(version)
@@ -42,22 +42,22 @@ seed:
 
 docker.run: docker.setup docker.postgres docker.fiber migrate.up
 	@echo "\n===========FGB==========="
-	@echo "App is running...\nVisit: http://localhost:5000 OR http://localhost:5000/swagger/"
+	@echo "App is running...\nVisit: http://localhost:9000 OR http://localhost:9000/swagger/"
 
 docker.setup:
 	docker network inspect dev-network >/dev/null 2>&1 || \
 	docker network create -d bridge dev-network
-	docker volume create fibergb-pgdata
+	docker volume create go-auth-pgdata
 
 docker.fiber.build: swag
-	docker build -t fibergb:latest .
+	docker build -t go-auth:latest .
 
 docker.fiber: docker.fiber.build
 	docker run --rm -d \
-		--name fibergb-api \
+		--name go-auth \
 		--network dev-network \
-		-p 5000:5000 \
-		fibergb
+		-p 9000:9000 \
+		go-auth
 
 docker.postgres:
 	docker run --rm -d \
@@ -65,7 +65,7 @@ docker.postgres:
 		--network dev-network \
 		-e POSTGRES_USER=dev \
 		-e POSTGRES_PASSWORD=dev \
-		-e POSTGRES_DB=fiber_go_api \
+		-e POSTGRES_DB=dev \
 		-v fibergb-pgdata:/var/lib/postgresql/data \
 		-p 5432:5432 \
 		postgres

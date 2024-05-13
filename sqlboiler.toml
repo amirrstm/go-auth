@@ -3,7 +3,9 @@ add-enum-types = true
 wipe     = true
 no-tests = true
 
-
+[auto-columns]
+    created = "created_at"
+    updated = "updated_at"
 
 [psql]
     dbname = "dev"

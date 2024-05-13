@@ -1,9 +1,7 @@
-FROM golang:1.16-alpine AS builder
+FROM golang:1.22-alpine AS builder
 
 # run the process as an unprivileged user.
-RUN mkdir /user &&
-    echo 'nobody:x:65534:65534:nobody:/:' >/user/passwd &&
-    echo 'nobody:x:65534:' >/user/group
+RUN mkdir /user
 
 #Install certs
 RUN apk add --no-cache ca-certificates
@@ -24,17 +22,12 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o go-auth .
 # Minimal image for running the application
 FROM scratch as final
 
-# Import the user and group files from the first stage.
-COPY --from=builder /user/group /user/passwd /etc/
 # Import the Certificate-Authority certificates for enabling HTTPS.
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 # Import the compiled executable from the first stage.
 COPY --from=builder ["/build/go-auth", "/build/.env", "/"]
 
 # Open port
-EXPOSE 5000
-
-# Will run as unprivileged user/group
-USER nobody:nobody
+EXPOSE 9000
 
 ENTRYPOINT ["/go-auth"]

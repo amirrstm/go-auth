@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"github.com/amirrstm/go-auth/app/dto"
-	repo "github.com/amirrstm/go-auth/app/repository"
 	"github.com/amirrstm/go-auth/pkg/config"
 	"github.com/amirrstm/go-auth/pkg/validator"
 
+	R "github.com/amirrstm/go-auth/app/repository"
 	H "github.com/amirrstm/go-auth/handler"
 	U "github.com/amirrstm/go-auth/utils"
 
@@ -18,15 +18,16 @@ import (
 )
 
 // GetNewAccessToken method for create a new access token.
-// @Description Create a new access token.
-// @Summary create a new access token
-// @Tags Token
-// @Accept json
-// @Produce json
-// @Param login body dto.Auth true "Request for token"
-// @Failure 400,404,401,500 {object} ErrorResponse status "Error"
-// @Success 200 {object} TokenResponse status "Ok"
-// @Router /v1/token/new [post]
+//
+//	@Description	Create a new access token.
+//	@Summary		create a new access token
+//	@Tags			Token
+//	@Accept			json
+//	@Produce		json
+//	@Param			login			body		dto.Auth		true	"Request for token"
+//	@Failure		400,404,401,500	{object}	ErrorResponse
+//	@Success		200				{object}	TokenResponse
+//	@Router			/v1/login [post]
 func GetNewAccessToken(c *fiber.Ctx) error {
 	dbTrx, txErr := U.StartNewPGTrx(c)
 
@@ -51,7 +52,7 @@ func GetNewAccessToken(c *fiber.Ctx) error {
 
 	}
 
-	user, serviceErr := repo.GetByUsername(dbTrx, c.UserContext(), login.Username)
+	user, serviceErr := R.GetByUsername(dbTrx, c.UserContext(), login.Username)
 	if serviceErr != nil {
 		return H.BuildError(c, serviceErr.Message, serviceErr.Code, serviceErr.Error)
 	}
